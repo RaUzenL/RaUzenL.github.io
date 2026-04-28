@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luo Yuran</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --sidebar-bg: #1c2333;
+      --sidebar-text: #cdd5e0;
+      --sidebar-muted: #8892a4;
+      --accent: #4e9af1;
+      --accent2: #f0a500;
+      --ink: #1a1f2e;
+      --body-text: #3d4555;
+      --muted: #7a8299;
+      --line: #e8eaef;
+      --section-bg: #f7f8fc;
+      --tag-bg: #eef2fb;
+      --tag-text: #3a5fc8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: var(--bg);
+      color: var(--body-text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      width: 280px;
+      min-width: 280px;
+      background: var(--sidebar-bg);
+      color: var(--sidebar-text);
+      padding: 48px 28px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar::-webkit-scrollbar { width: 0; }
+
+    .photo-placeholder {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 3px solid var(--accent);
+      margin: 0 auto;
+      background: #2a3249;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .photo-placeholder:hover { border-color: var(--accent2); }
+
+    .photo-placeholder input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .photo-placeholder img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .photo-placeholder svg {
+      width: 36px;
+      height: 36px;
+      color: var(--sidebar-muted);
+    }
+
+    .photo-placeholder span {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--sidebar-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .sidebar-name { text-align: center; }
+
+    .sidebar-name h1 {
+      font-family: 'Lora', serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+
+    .sidebar-name .tagline {
+      font-size: 0.8rem;
+      color: var(--sidebar-muted);
+      margin-top: 4px;
+      font-style: italic;
+      font-family: 'Lora', serif;
+    }
+
+    .sidebar-divider { height: 1px; background: #2e3a52; }
+
+    .sidebar-section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .contact-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+    .contact-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82rem;
+      color: var(--sidebar-text);
+    }
+
+    .contact-list li svg { width: 14px; height: 14px; flex-shrink: 0; color: var(--accent); }
+
+    .contact-list a {
+      color: var(--sidebar-text);
+      text-decoration: none;
+      transition: color 0.2s;
+      word-break: break-all;
+    }
+    .contact-list a:hover { color: var(--accent); }
+
+    .sidebar-nav { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+
+    .sidebar-nav a {
+      display: block;
+      padding: 7px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: var(--sidebar-muted);
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .sidebar-nav a:hover { background: #263044; color: #fff; }
+    .sidebar-nav a.active { background: #2a3c5a; color: var(--accent); font-weight: 500; }
+
+    .skills-sidebar { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .skill-tag {
+      background: #263044;
+      color: var(--sidebar-text);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    /* ─── MAIN ─── */
+    .main {
+      flex: 1;
+      padding: 56px 56px 80px;
+      max-width: 780px;
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .section { margin-bottom: 52px; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .section-header h2 {
+      font-family: 'Lora', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    .section-header .line { flex: 1; height: 1px; background: var(--line); }
+
+    .bio-text {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--body-text);
+      font-family: 'Lora', serif;
+      font-style: italic;
+      border-left: 3px solid var(--accent);
+      padding-left: 20px;
+      margin-bottom: 20px;
+    }
+
+    .highlight-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+
+    .chip {
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    .entry-card {
+      background: var(--section-bg);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 14px;
+      transition: box-shadow 0.2s, border-color 0.2s;
+      position: relative;
+    }
+
+    .entry-card:hover {
+      box-shadow: 0 4px 18px rgba(78,154,241,0.08);
+      border-color: #c5d5f0;
+    }
+
+    .entry-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 16px; bottom: 16px;
+      width: 3px;
+      background: var(--accent);
+      border-radius: 0 3px 3px 0;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .card-title { font-size: 1rem; font-weight: 500; color: var(--ink); line-height: 1.35; }
+    .card-org { font-size: 0.88rem; color: var(--muted); margin-top: 2px; font-style: italic; }
+
+    .card-date {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      background: #eef0f7;
+      padding: 3px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .card-bullets { margin-top: 10px; padding-left: 0; list-style: none; }
+
+    .card-bullets li {
+      font-size: 0.9rem;
+      color: var(--body-text);
+      padding-left: 1.1em;
+      position: relative;
+      margin-bottom: 4px;
+      line-height: 1.6;
+    }
+
+    .card-bullets li::before { content: '›'; position: absolute; left: 0; color: var(--accent); font-weight: 600; }
+
+    .skills-grid-main {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .skill-card {
+      background: var(--section-bg);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+
+    .skill-card-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.63rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .skill-card p { font-size: 0.88rem; color: var(--body-text); line-height: 1.7; }
+
+    .two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .main-footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 768px) {
+      body { flex-direction: column; }
+      .sidebar { width: 100%; min-width: unset; height: auto; position: static; padding: 32px 24px; }
+      .main { padding: 32px 22px 60px; max-width: 100%; }
+      .skills-grid-main { grid-template-columns: 1fr 1fr; }
+      .two-col-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<aside class="sidebar">
+
+  <img src="photo.png" alt="Luo Yuran" style="width:130px;height:130px;border-radius:50%;object-fit:cover;border:3px solid #4e9af1;display:block;margin:0 auto;">
+
+  <div class="sidebar-name">
+    <h1>Luo Yuran</h1>
+    <div class="tagline">Business Analytics · NUS</div>
+  </div>
+
+  <div class="sidebar-divider"></div>
+
+  <div>
+    <div class="sidebar-section-label">Navigate</div>
+    <ul class="sidebar-nav">
+      <li><a href="#about" class="active">About</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#leadership">Leadership</a></li>
+      <li><a href="#skills">Skills</a></li>
+    </ul>
+  </div>
+
+  <div class="sidebar-divider"></div>
+
+  <div>
+    <div class="sidebar-section-label">Contact</div>
+    <ul class="contact-list">
+      <li>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        <a href="mailto:luo_yuran@u.nus.edu">luo_yuran@u.nus.edu</a>
+      </li>
+      <li>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+        <a href="https://www.linkedin.com/in/yuran-luo/" target="_blank">linkedin.com/in/yuran-luo</a>
+      </li>
+      <li>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <span>Singapore</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="sidebar-divider"></div>
+
+  <div>
+    <div class="sidebar-section-label">Tech Stack</div>
+    <div class="skills-sidebar">
+      <span class="skill-tag">Python</span>
+      <span class="skill-tag">SQL</span>
+      <span class="skill-tag">R</span>
+      <span class="skill-tag">Power BI</span>
+      <span class="skill-tag">React</span>
+      <span class="skill-tag">Vue</span>
+      <span class="skill-tag">Tableau</span>
+      <span class="skill-tag">Java</span>
+      <span class="skill-tag">Git</span>
+    </div>
+  </div>
+
+</aside>
+
+<main class="main">
+
+  <section class="section" id="about">
+    <div class="section-header"><h2>About Me</h2><div class="line"></div></div>
+    <p class="bio-text">
+      Business Analytics student at the National University of Singapore with a strong foundation in machine learning, data analytics, and full-stack development. Passionate about turning data into actionable insights and building tools that solve real-world problems.
+    </p>
+    <div class="highlight-chips">
+      <span class="chip">🎓 NUS Business Analytics</span>
+      <span class="chip">📊 Machine Learning</span>
+      <span class="chip">💻 Full-Stack Dev</span>
+      <span class="chip">📈 GPA 4.32 / 5.0</span>
+      <span class="chip">🌐 English & Chinese</span>
+    </div>
+  </section>
+
+  <section class="section" id="education">
+    <div class="section-header"><h2>Education</h2><div class="line"></div></div>
+
+    <div class="entry-card">
+      <div class="card-top">
+        <div>
+          <div class="card-title">National University of Singapore</div>
+          <div class="card-org">Bachelor of Business Analytics · School of Computing</div>
+        </div>
+        <div class="card-date">Aug 2023 – Present</div>
+      </div>
+      <ul class="card-bullets">
+        <li>Second Major in Statistics, specialised in Machine Learning-based Analytics</li>
+        <li>GPA: 4.32 / 5.0 — Second Class Upper</li>
+        <li>Coursework: Machine Learning, Data Mining, Regression Analysis, Bayesian Reasoning, Big Data Technologies, Computational Methods</li>
+      </ul>
+    </div>
+
+    <div class="entry-card">
+      <div class="card-top">
+        <div>
+          <div class="card-title">Sun Yat-sen University</div>
+          <div class="card-org">Bachelor of Accountancy</div>
+        </div>
+        <div class="card-date">Sep 2022 – Jul 2023</div>
+      </div>
+      <ul class="card-bullets">
+        <li>Top 1% in cohort for Economics courses</li>
+        <li>Coursework: Accounting, Microeconomics, Macroeconomics, Management</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="experience">
+    <div class="section-header"><h2>Experience</h2><div class="line"></div></div>
+
+    <div class="entry-card">
+      <div class="card-top">
+        <div>
+          <div class="card-title">Data Analyst Intern</div>
+          <div class="card-org">Green Link Digital Bank · Singapore</div>
+        </div>
+        <div class="card-date">May – Aug 2025</div>
+      </div>
+      <ul class="card-bullets">
+        <li>Built 4 Power BI dashboards to track loans, transactions, and key banking metrics</li>
+        <li>Created 3 critical data tables serving as foundational sources for key banking metrics</li>
+        <li>Optimised SQL to resolve 6 data issues via Jira, ensuring accurate reporting across teams</li>
+        <li>Developed 2 runbooks to automate bulk table processing on data integration platforms</li>
+      </ul>
+    </div>
+
+    <div class="entry-card">
+      <div class="card-top">
+        <div>
+          <div class="card-title">Financial Markets Intern</div>
+          <div class="card-org">Guotai Junan Securities Co., Ltd · China</div>
+        </div>
+        <div class="card-date">Dec 2024 – Jan 2025</div>
+      </div>
+      <ul class="card-bullets">
+        <li>Developed tailored investment strategies with hands-on experience in financial planning, risk analysis, and client presentations</li>
+      </ul>
+    </div>
+
+    <div class="entry-card">
+      <div class="card-top">
+        <div>
+          <div class="card-title">Research Assistant</div>
+          <div class="card-org">Chongqing University · Department of Finance · China</div>
+        </div>
+        <div class="card-date">May – Jun 2024</div>
+      </div>
+      <ul class="card-bullets">
+        <li>Collaborated with a team of 10 to research digital finance applications in the insurance industry in Chongqing</li>
+        <li>Summarised data-driven insights for group discussions</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="projects">
+    <div class="section-header"><h2>Projects</h2><div class="line"></div></div>
+
+    <div class="entry-card">
+      <div class="card-top">
+        <div>
+          <div class="card-title">TikTok TechJam Hackathon 2025</div>
+          <div class="card-org">AI-Powered Review Moderation System</div>
+        </div>
+        <div class="card-date">Sep 2025</div>
+      </div>
+      <ul class="card-bullets">
+        <li>Led a team of 4 to build an AI-powered moderation system classifying Google reviews by policy compliance using regex, heuristics, and LLMs</li>
+      </ul>
+    </div>
+
+    <div class="entry-card">
+      <div class="card-top">
+        <div>
+          <div class="card-title">NUS Lost & Found</div>
+          <div class="card-org">Vue · Firebase · Web Development</div>
+        </div>
+        <div class="card-date">Feb – May 2025</div>
+      </div>
+      <ul class="card-bullets">
+        <li>Built a web app with real-time filters, consent-based contact sharing, and visual statistics using Vue, HTML, CSS, and Firebase</li>
+      </ul>
+    </div>
+
+    <div class="entry-card">
+      <div class="card-top">
+        <div>
+          <div class="card-title">Micron NUS-ISE Business Analytics Competition 2024</div>
+          <div class="card-org">🏆 3rd Prize — 600+ participants</div>
+        </div>
+        <div class="card-date">Feb – Mar 2024</div>
+      </div>
+      <ul class="card-bullets">
+        <li>Built a Python forecasting model for sulphuric acid usage in semiconductor production to guide operational planning</li>
+      </ul>
+    </div>
+
+    <div class="entry-card">
+      <div class="card-top">
+        <div>
+          <div class="card-title">ExploreSG</div>
+          <div class="card-org">React · Express.js · SQL · Full-Stack</div>
+        </div>
+        <div class="card-date">May – Aug 2024</div>
+      </div>
+      <ul class="card-bullets">
+        <li>Built a full-stack website using React, Express.js, and SQL with one partner</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="leadership">
+    <div class="section-header"><h2>Leadership & Activities</h2><div class="line"></div></div>
+
+    <div class="entry-card">
+      <div class="card-top">
+        <div>
+          <div class="card-title">Director — NUSSU International Student Relations</div>
+          <div class="card-org">Singapore</div>
+        </div>
+        <div class="card-date">May 2025 – Present</div>
+      </div>
+      <ul class="card-bullets">
+        <li>Lead welfare projects for ~50 international students, coordinating planning, logistics, and stakeholder communication to promote cross-cultural engagement</li>
+      </ul>
+    </div>
+
+    <div class="entry-card">
+      <div class="card-top">
+        <div>
+          <div class="card-title">Volunteer — NUS Volunteer Action Committee (NVAC)</div>
+        </div>
+        <div class="card-date">Jan – Apr 2024</div>
+      </div>
+      <ul class="card-bullets">
+        <li>Volunteered in weekly sessions at Moral Welfare Home, offering companionship and emotional support to residents with disabilities</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="skills">
+    <div class="section-header"><h2>Skills</h2><div class="line"></div></div>
+
+    <div class="skills-grid-main">
+      <div class="skill-card">
+        <div class="skill-card-label">Programming</div>
+        <p>Python · Java · R · JavaScript</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-label">Data & Analytics</div>
+        <p>SQL · Power BI · Tableau · Excel</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-label">Web & Dev</div>
+        <p>HTML · CSS · Vue · React · Git</p>
+      </div>
+    </div>
+
+    <div class="two-col-grid" style="margin-top:14px;">
+      <div class="skill-card">
+        <div class="skill-card-label">Languages</div>
+        <p>English — Professional Working<br>Chinese — Native</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-label">Interests</div>
+        <p>Mandarin MC · Badminton · Video Editing · Travelling · Hiking</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="main-footer">
+    <span>Luo Yuran © 2026</span>
+    <span>luo_yuran@u.nus.edu</span>
+  </footer>
+
+</main>
+
+<script>
+  function loadPhoto(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = document.getElementById('photoPreview');
+      document.getElementById('photoIcon').style.display = 'none';
+      document.getElementById('photoLabel').style.display = 'none';
+      img.src = e.target.result;
+      img.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Active nav highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+
+</body>
+</html>
