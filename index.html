@@ -224,15 +224,6 @@
 
     .highlight-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
 
-    .bio-list {
-      font-size: 1.15rem;
-    }
-
-    .bio-item {
-      margin-bottom: 10px;
-      line-height: 1.5;
-    }
-
     .chip {
       background: var(--tag-bg);
       color: var(--tag-text);
@@ -323,6 +314,14 @@
       color: var(--accent);
       margin-bottom: 8px;
     }
+    .bio-list {
+      font-size: 1.15rem;
+    }
+
+    .bio-item {
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
 
     .skill-card p { font-size: 0.88rem; color: var(--body-text); line-height: 1.7; }
 
@@ -377,6 +376,42 @@
       .skills-grid-main { grid-template-columns: 1fr 1fr; }
       .two-col-grid { grid-template-columns: 1fr; }
     }
+
+    /* ─── DETAIL DRAWER ─── */
+    .entry-card[data-drawer] { cursor: pointer; }
+    .entry-card[data-drawer]:hover { border-color: #c5d5f0; box-shadow: 0 4px 18px rgba(78,154,241,0.10); }
+    .entry-card[data-drawer] .card-title::after { content: ' ↗'; font-size: 0.75rem; color: var(--accent); opacity: 0; transition: opacity 0.15s; }
+    .entry-card[data-drawer]:hover .card-title::after { opacity: 1; }
+
+    .drawer-overlay { position: fixed; inset: 0; background: rgba(20,26,40,0.35); backdrop-filter: blur(2px); z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
+    .drawer-overlay.open { opacity: 1; pointer-events: all; }
+
+    .detail-drawer { position: fixed; top: 0; right: 0; width: 420px; max-width: 92vw; height: 100vh; background: #fff; box-shadow: -8px 0 40px rgba(0,0,0,0.12); z-index: 101; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; overflow: hidden; }
+    .detail-drawer.open { transform: translateX(0); }
+
+    .drawer-header { padding: 28px 28px 20px; border-bottom: 1px solid var(--line); position: relative; }
+    .drawer-category { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+    .drawer-title { font-family: 'Lora', serif; font-size: 1.2rem; font-weight: 600; color: var(--ink); line-height: 1.3; }
+    .drawer-org { font-size: 0.85rem; color: var(--muted); font-style: italic; margin-top: 4px; }
+    .drawer-date { display: inline-block; margin-top: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--muted); background: #eef0f7; padding: 3px 8px; border-radius: 4px; }
+
+    .drawer-close { position: absolute; top: 20px; right: 20px; width: 32px; height: 32px; border: none; background: var(--section-bg); border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--muted); transition: background 0.15s, color 0.15s; font-size: 1.1rem; }
+    .drawer-close:hover { background: var(--line); color: var(--ink); }
+
+    .drawer-body { flex: 1; overflow-y: auto; padding: 24px 28px 32px; }
+    .drawer-body::-webkit-scrollbar { width: 4px; }
+    .drawer-body::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+
+    .drawer-section-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; margin-top: 22px; }
+    .drawer-section-label:first-child { margin-top: 0; }
+
+    .drawer-bullets { list-style: none; padding: 0; }
+    .drawer-bullets li { font-size: 0.88rem; color: var(--body-text); padding-left: 1.1em; position: relative; margin-bottom: 8px; line-height: 1.65; }
+    .drawer-bullets li::before { content: '›'; position: absolute; left: 0; color: var(--accent); font-weight: 600; }
+
+    .drawer-detail-text { font-size: 0.88rem; color: var(--body-text); line-height: 1.75; }
+    .drawer-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+    .drawer-tag { background: var(--tag-bg); color: var(--tag-text); font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; padding: 3px 10px; border-radius: 20px; }
   </style>
 </head>
 <body>
@@ -462,7 +497,7 @@
   <section class="section" id="education">
     <div class="section-header"><h2>Education</h2><div class="line"></div></div>
 
-    <div class="entry-card">
+    <div class="entry-card" data-drawer="nus">
       <div class="card-top">
         <div>
           <div class="card-title">National University of Singapore</div>
@@ -476,7 +511,7 @@
       </ul>
     </div>
 
-    <div class="entry-card">
+    <div class="entry-card" data-drawer="sysu">
       <div class="card-top">
         <div>
           <div class="card-title">Sun Yat-sen University</div>
@@ -494,7 +529,7 @@
   <section class="section" id="experience">
     <div class="section-header"><h2>Experience</h2><div class="line"></div></div>
 
-    <div class="entry-card">
+    <div class="entry-card" data-drawer="greenlink">
       <div class="card-top">
         <div>
           <div class="card-title">Data Analyst Intern</div>
@@ -510,7 +545,7 @@
       </ul>
     </div>
 
-    <div class="entry-card">
+    <div class="entry-card" data-drawer="guotai">
       <div class="card-top">
         <div>
           <div class="card-title">Financial Markets Intern</div>
@@ -527,7 +562,7 @@
   <section class="section" id="projects">
     <div class="section-header"><h2>Projects</h2><div class="line"></div></div>
 
-    <div class="entry-card">
+    <div class="entry-card" data-drawer="nl2sql">
       <div class="card-top">
         <div>
           <div class="card-title">Conversational NL2SQL System for Clinical Data Analytics</div>
@@ -542,7 +577,7 @@
       </ul>
     </div>
 
-    <div class="entry-card">
+    <div class="entry-card" data-drawer="tiktok">
       <div class="card-top">
         <div>
           <div class="card-title">TikTok TechJam Hackathon 2025</div>
@@ -555,7 +590,7 @@
       </ul>
     </div>
 
-    <div class="entry-card">
+    <div class="entry-card" data-drawer="lostfound">
       <div class="card-top">
         <div>
           <div class="card-title">NUS Lost & Found</div>
@@ -568,7 +603,7 @@
       </ul>
     </div>
 
-    <div class="entry-card">
+    <div class="entry-card" data-drawer="micron">
       <div class="card-top">
         <div>
           <div class="card-title">Micron NUS-ISE Business Analytics Competition 2024</div>
@@ -581,7 +616,7 @@
       </ul>
     </div>
 
-    <div class="entry-card">
+    <div class="entry-card" data-drawer="exploresg">
       <div class="card-top">
         <div>
           <div class="card-title">ExploreSG</div>
@@ -594,7 +629,7 @@
       </ul>
     </div>
 
-    <div class="entry-card">
+    <div class="entry-card" data-drawer="digitalfinance">
       <div class="card-top">
         <div>
           <div class="card-title">Digital Finance Research</div>
@@ -613,7 +648,7 @@
   <section class="section" id="leadership">
     <div class="section-header"><h2>Leadership & Activities</h2><div class="line"></div></div>
 
-    <div class="entry-card">
+    <div class="entry-card" data-drawer="nussu">
       <div class="card-top">
         <div>
           <div class="card-title">Director — NUSSU International Student Relations</div>
@@ -705,6 +740,19 @@
 
 </main>
 
+<!-- ─── DETAIL DRAWER ─── -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="detail-drawer" id="detailDrawer">
+  <div class="drawer-header">
+    <div class="drawer-category" id="drawerCategory"></div>
+    <div class="drawer-title" id="drawerTitle"></div>
+    <div class="drawer-org" id="drawerOrg"></div>
+    <div class="drawer-date" id="drawerDate"></div>
+    <button class="drawer-close" id="drawerClose">✕</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+</div>
+
 <script>
   function loadPhoto(event) {
     const file = event.target.files[0];
@@ -723,16 +771,199 @@
   // Active nav highlight on scroll
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.sidebar-nav a');
-
   window.addEventListener('scroll', () => {
     let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 120) current = s.id;
-    });
-    navLinks.forEach(a => {
-      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-    });
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    navLinks.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + current); });
   });
+
+  // ─── DRAWER DATA ───
+  // Fill in the `detail` field for each entry with whatever extra context you want to show
+  const drawerData = {
+    nus: {
+      category: 'Education',
+      title: 'National University of Singapore',
+      org: 'Bachelor of Business Analytics · School of Computing',
+      date: 'Aug 2023 – Present',
+      bullets: [
+        'Specialised in Machine Learning-based Analytics, minor in Statistics',
+        'Coursework: Machine Learning, Big Data Technologies, Regression Analysis, Bayesian Reasoning, Computational Methods',
+      ],
+      detail: 'NUS School of Computing is consistently ranked among the top computing schools in Asia. The Business Analytics programme combines rigorous statistical foundations with hands-on data engineering and ML coursework.',
+      tags: ['Machine Learning', 'Statistics', 'Big Data', 'Python', 'R'],
+    },
+    sysu: {
+      category: 'Education',
+      title: 'Sun Yat-sen University',
+      org: 'Bachelor of Accountancy',
+      date: 'Sep 2022 – Jul 2023',
+      bullets: [
+        'Top 1% in cohort for Economics courses',
+        'Coursework: Accounting, Microeconomics, Macroeconomics, Management',
+      ],
+      detail: 'Completed one year of accountancy studies before transferring to NUS. This background gives me a strong financial foundation that complements my analytics work.',
+      tags: ['Economics', 'Accounting', 'Finance'],
+    },
+    greenlink: {
+      category: 'Experience',
+      title: 'Data Analyst Intern',
+      org: 'Green Link Digital Bank · Singapore',
+      date: 'May – Aug 2025',
+      bullets: [
+        'Built 4 Power BI dashboards to track loans, transactions, and key banking metrics',
+        'Created 3 critical data tables serving as foundational sources for key banking metrics',
+        'Optimised SQL to resolve 6 data issues via Jira, ensuring accurate reporting across teams',
+        'Developed 2 runbooks to automate bulk table processing on data integration platforms',
+      ],
+      detail: 'Green Link Digital Bank is a Singapore-licensed digital bank serving SMEs. My role focused on building BI dashboards, data pipelines, and documentation. I worked closely with the credit risk and operations teams.',
+      tags: ['Power BI', 'SQL', 'Banking Analytics', 'Runbooks'],
+    },
+    guotai: {
+      category: 'Experience',
+      title: 'Financial Markets Intern',
+      org: 'Guotai Junan Securities Co., Ltd · China',
+      date: 'Dec 2024 – Jan 2025',
+      bullets: [
+        'Developed tailored investment strategies with hands-on experience in financial planning, risk analysis, and client presentations',
+      ],
+      detail: 'Guotai Junan is one of China\'s largest full-service investment banks. This internship gave me exposure to equity research workflows and client-facing strategy decks in a fast-paced trading environment.',
+      tags: ['Investment Strategy', 'Risk Analysis', 'Financial Markets', 'Client Presentations'],
+    },
+    nl2sql: {
+      category: 'Project · Capstone',
+      title: 'Conversational NL2SQL System for Clinical Data Analytics',
+      org: 'NUS Business Analytics Capstone · In collaboration with NCCS',
+      date: 'Jan – Apr 2026',
+      bullets: [
+        'Built a conversational NL2SQL system enabling non-technical users to query healthcare databases in natural language with ~90% execution accuracy',
+        'Developed a multi-stage LLM pipeline with semantic schema mapping, guardrails (prompt constraints, validation, LangGraph retries)',
+        'Built a full-stack chat interface with session persistence and visualisation',
+      ],
+      detail: 'The system was designed for non-technical users at the National Cancer Centre Singapore who needed to query complex clinical datasets without writing SQL. Our team of 6 spent 4 months developing a robust NL2SQL pipeline to achieve high accuracy and a user-friendly interface, with iterative testing and feedback from NCCS stakeholders.',
+      tags: ['LLM', 'LangGraph', 'NL2SQL', 'Python', 'Full-Stack', 'Healthcare AI'],
+    },
+    tiktok: {
+      category: 'Project · Hackathon',
+      title: 'TikTok TechJam Hackathon 2025',
+      org: 'AI-Powered Review Moderation System',
+      date: 'Sep 2025',
+      bullets: [
+        'Led a team of 4 to build an LLM-powered moderation system classifying Google reviews by policy compliance using regex, heuristics, and LLMs',
+      ],
+      detail: 'Built during a 48-hour hackathon. The system combined rule-based filters for clear violations with an LLM layer for nuanced judgment calls, significantly reducing false positives.',
+      tags: ['LLM', 'NLP', 'Python', 'Moderation', 'Hackathon'],
+    },
+    lostfound: {
+      category: 'Project · Web App',
+      title: 'NUS Lost & Found',
+      org: 'Vue · Firebase · Web Development',
+      date: 'Feb – May 2025',
+      bullets: [
+        'Built a web app with real-time filters, consent-based contact sharing, and visual statistics using Vue, HTML, CSS, and Firebase',
+      ],
+      detail: 'A campus utility app that lets students post and search for lost items with category filters and location tags. Designed a privacy-first contact flow where users consent before their contact details are shared with item finders.',
+      tags: ['Vue', 'Firebase', 'HTML/CSS', 'JavaScript', 'UX Design'],
+    },
+    micron: {
+      category: 'Project · Competition',
+      title: 'Micron NUS-ISE Business Analytics Competition 2024',
+      org: '🏆 3rd Prize — 600+ participants',
+      date: 'Feb – Mar 2024',
+      bullets: [
+        'Built a Python forecasting model for sulphuric acid usage in semiconductor production to guide operational planning',
+      ],
+      detail: 'Competed against 600+ participants. The forecasting task required us to model industrial chemical consumption data and present actionable procurement recommendations to a panel of Micron industry judges.',
+      tags: ['Python', 'Forecasting', 'Time Series', 'Semiconductor', 'Analytics'],
+    },
+    exploresg: {
+      category: 'Project · Full-Stack',
+      title: 'ExploreSG',
+      org: 'React · Express.js · SQL · Full-Stack',
+      date: 'May – Aug 2024',
+      bullets: [
+        'Built a full-stack website using React, Express.js, and SQL with one partner',
+      ],
+      detail: 'A Singapore attractions discovery platform built as a pair programming project. This is my first full-stack web development project. I learnt a lot about database schema modelling and frontend-backend integration under the guidance of my mentor in the 3-month development cycle.',
+      tags: ['React', 'Express.js', 'SQL', 'REST API', 'Full-Stack'],
+    },
+    digitalfinance: {
+      category: 'Project · Research',
+      title: 'Digital Finance Research',
+      org: 'Chongqing University, China',
+      date: 'May – Jun 2024',
+      bullets: [
+        'Collaborated with a team of 10 in the Finance Department to analyse digital finance applications in the insurance industry in Chongqing',
+      ],
+      detail: 'Conducted qualitative and quantitative research on how digital payment platforms and insurtech are reshaping insurance distribution in Chongqing. Contributed literature reviews and data visualisations for group presentations.',
+      tags: ['Research', 'Digital Finance', 'Insurtech', 'Data Analysis'],
+    },
+    nussu: {
+      category: 'Leadership',
+      title: 'Director — NUSSU International Student Relations',
+      org: 'NUS Students\' Union · Singapore',
+      date: 'May 2025 – Present',
+      bullets: [
+        'Lead welfare projects for ~50 international students, coordinating planning, logistics, and stakeholder communication to promote cross-cultural engagement',
+      ],
+      detail: 'Oversee the welfare portfolio for international students within the NUS Students\' Union. Responsibilities include organising orientation events, managing budgets, liaising with university administration, and building peer support networks for students transitioning to life in Singapore.',
+      tags: ['Leadership', 'Event Management', 'Stakeholder Communication', 'Cross-cultural'],
+    },
+  };
+
+  // ─── DRAWER LOGIC ───
+  const overlay = document.getElementById('drawerOverlay');
+  const drawer = document.getElementById('detailDrawer');
+  const closeBtn = document.getElementById('drawerClose');
+
+  function openDrawer(key) {
+    const d = drawerData[key];
+    if (!d) return;
+
+    document.getElementById('drawerCategory').textContent = d.category;
+    document.getElementById('drawerTitle').textContent = d.title;
+    document.getElementById('drawerOrg').textContent = d.org;
+    document.getElementById('drawerDate').textContent = d.date;
+
+    let html = '';
+
+    if (d.bullets && d.bullets.length) {
+      html += `<div class="drawer-section-label">Highlights</div>`;
+      html += `<ul class="drawer-bullets">`;
+      d.bullets.forEach(b => { html += `<li>${b}</li>`; });
+      html += `</ul>`;
+    }
+
+    if (d.detail) {
+      html += `<div class="drawer-section-label">More Detail</div>`;
+      html += `<p class="drawer-detail-text">${d.detail}</p>`;
+    }
+
+    if (d.tags && d.tags.length) {
+      html += `<div class="drawer-section-label">Tags</div>`;
+      html += `<div class="drawer-tags">`;
+      d.tags.forEach(t => { html += `<span class="drawer-tag">${t}</span>`; });
+      html += `</div>`;
+    }
+
+    document.getElementById('drawerBody').innerHTML = html;
+    overlay.classList.add('open');
+    drawer.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer() {
+    overlay.classList.remove('open');
+    drawer.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.entry-card[data-drawer]').forEach(card => {
+    card.addEventListener('click', () => openDrawer(card.dataset.drawer));
+  });
+
+  closeBtn.addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
 </script>
 
 </body>
