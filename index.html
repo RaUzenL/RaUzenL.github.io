@@ -378,10 +378,10 @@
     }
 
     /* ─── DETAIL DRAWER ─── */
-    .entry-card[data-drawer] { cursor: pointer; }
+    .entry-card[data-drawer] { cursor: pointer; padding-bottom: 44px; }
     .entry-card[data-drawer]:hover { border-color: #c5d5f0; box-shadow: 0 4px 18px rgba(78,154,241,0.10); }
-    .entry-card[data-drawer] .card-title::after { content: ' ↗'; font-size: 0.75rem; color: var(--accent); opacity: 0; transition: opacity 0.15s; }
-    .entry-card[data-drawer]:hover .card-title::after { opacity: 1; }
+    .entry-card[data-drawer]::after { content: 'View details →'; position: absolute; bottom: 12px; right: 16px; font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; background: var(--tag-bg); color: var(--tag-text); padding: 3px 10px; border-radius: 20px; transition: background 0.15s, color 0.15s; }
+    .entry-card[data-drawer]:hover::after { background: #dce8fb; color: #2a4db8; }
 
     .drawer-overlay { position: fixed; inset: 0; background: rgba(20,26,40,0.35); backdrop-filter: blur(2px); z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
     .drawer-overlay.open { opacity: 1; pointer-events: all; }
