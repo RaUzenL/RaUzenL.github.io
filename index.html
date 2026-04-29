@@ -319,6 +319,37 @@
 
     .two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
+    /* ─── PERSONAL SECTION ─── */
+    .personal-card {
+      background: var(--section-bg);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 20px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .personal-card::after {
+      content: '';
+      position: absolute;
+      right: -20px; bottom: -20px;
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: var(--tag-bg);
+      opacity: 0.6;
+    }
+
+    .personal-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.63rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 10px;
+    }
+
+    .personal-card p { font-size: 0.88rem; color: var(--body-text); line-height: 1.7; }
+
     .main-footer {
       margin-top: 60px;
       padding-top: 20px;
@@ -361,6 +392,7 @@
       <li><a href="#projects">Projects</a></li>
       <li><a href="#leadership">Leadership</a></li>
       <li><a href="#skills">Skills</a></li>
+      <li><a href="#personal">Personal</a></li>
     </ul>
   </div>
 
@@ -414,7 +446,6 @@
       <span class="chip">🎓 NUS Business Analytics</span>
       <span class="chip">📊 Machine Learning</span>
       <span class="chip">💻 Full-Stack Dev</span>
-      <span class="chip">📈 GPA 4.32 / 5.0</span>
       <span class="chip">🌐 English & Chinese</span>
     </div>
   </section>
@@ -432,7 +463,6 @@
       </div>
       <ul class="card-bullets">
         <li>Second Major in Statistics, specialised in Machine Learning-based Analytics</li>
-        <li>GPA: 4.32 / 5.0 — Second Class Upper</li>
         <li>Coursework: Machine Learning, Data Mining, Regression Analysis, Bayesian Reasoning, Big Data Technologies, Computational Methods</li>
       </ul>
     </div>
@@ -501,6 +531,21 @@
 
   <section class="section" id="projects">
     <div class="section-header"><h2>Projects</h2><div class="line"></div></div>
+
+    <div class="entry-card">
+      <div class="card-top">
+        <div>
+          <div class="card-title">Conversational NL2SQL System for Clinical Data Analytics</div>
+          <div class="card-org">NUS Business Analytics Capstone Project</div>
+        </div>
+        <div class="card-date">Jan – Apr 2026</div>
+      </div>
+      <ul class="card-bullets">
+        <li><strong>In collaboration with National Cancer Centre Singapore (NCCS)</strong></li>
+        <li>Built a conversational NL2SQL system for clinical data analytics, enabling non-technical users to query healthcare databases using natural language with ~90% execution accuracy.</li>
+        <li>Developed a multi-stage LLM pipeline with semantic schema mapping, guardrails (prompt constraints, validation, LangGraph retries), and a full-stack chat interface with session persistence and visualisation.</li>
+      </ul>
+    </div>
 
     <div class="entry-card">
       <div class="card-top">
@@ -576,10 +621,22 @@
         <div>
           <div class="card-title">Volunteer — NUS Volunteer Action Committee (NVAC)</div>
         </div>
-        <div class="card-date">Jan – Apr 2024</div>
+        <div class="card-date">Feb 2024</div>
       </div>
       <ul class="card-bullets">
         <li>Volunteered in weekly sessions at Moral Welfare Home, offering companionship and emotional support to residents with disabilities</li>
+      </ul>
+    </div>
+
+    <div class="entry-card">
+      <div class="card-top">
+        <div>
+          <div class="card-title">Member — King Edward VII Chinese Drama</div>
+        </div>
+        <div class="card-date">Sep 2023 – Feb 2024</div>
+      </div>
+      <ul class="card-bullets">
+        <li>Assisted in the Props and Costumes team for the 2024 Chinese Drama 《宝岛一村》 (The Village).</li>
       </ul>
     </div>
   </section>
@@ -592,23 +649,40 @@
         <div class="skill-card-label">Programming</div>
         <p>Python · Java · R · JavaScript</p>
       </div>
+
+      <div class="skill-card">
+        <div class="skill-card-label">AI & ML</div>
+        <p>Feature Engineering · Word Embeddings · Neural Networks (DNN / CNN) · Two-Tower Retrieval · Model Evaluation & Regularization · LLM Agents & LangGraph</p>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-card-label">Data Engineering</div>
+        <p>Spark (PySpark) · Hadoop · Airflow · Kafka · LLM Augmented Analytics</p>
+      </div>
+
       <div class="skill-card">
         <div class="skill-card-label">Data & Analytics</div>
         <p>SQL · Power BI · Tableau · Excel</p>
       </div>
+
       <div class="skill-card">
         <div class="skill-card-label">Web & Dev</div>
-        <p>HTML · CSS · Vue · React · Git</p>
+        <p>HTML · CSS · React · Vue · Node.js · Git</p>
       </div>
     </div>
+  </section>
 
-    <div class="two-col-grid" style="margin-top:14px;">
-      <div class="skill-card">
-        <div class="skill-card-label">Languages</div>
-        <p>English — Professional Working<br>Chinese — Native</p>
+  <!-- ─── PERSONAL SECTION ─── -->
+  <section class="section" id="personal">
+    <div class="section-header"><h2>Personal</h2><div class="line"></div></div>
+
+    <div class="two-col-grid">
+      <div class="personal-card">
+        <div class="personal-label">Languages</div>
+        <p>English — Full Professional Proficiency<br>Chinese — Native</p>
       </div>
-      <div class="skill-card">
-        <div class="skill-card-label">Interests</div>
+      <div class="personal-card">
+        <div class="personal-label">Interests</div>
         <p>Mandarin Emcee · Badminton · Video Editing · Travelling · Hiking</p>
       </div>
     </div>
